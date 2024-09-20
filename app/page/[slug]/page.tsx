@@ -1,33 +1,36 @@
-import { allPosts } from 'contentlayer/generated'
-import { getMDXComponent } from 'next-contentlayer2/mdx'
-import { notFound } from 'next/navigation'
+import { format, parseISO } from "date-fns";
+import { allPosts } from "contentlayer/generated";
+import { getMDXComponent } from "next-contentlayer2/hooks";
 
-export async function generateStaticParams() {
-  return allPosts.map((post) => ({
-    slug: post.slug,
-  }))
-}
+export const generateStaticParams = async () =>
+  allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
 
-export default function Post({ params }: { params: { slug: string } }) {
-  const post = allPosts.find((post) => post.slug === params.slug)
+export const generateMetadata = ({ params }) => {
+  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
+  return { title: post.title };
+};
 
+const PostLayout = ({ params }: { params: { slug: string } }) => {
+  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  
   if (!post) {
-    notFound()
+    return <div>Nothing here</div>; // 或其他适当的错误处理
   }
 
-  const Content = getMDXComponent(post.body.code)
+  const Content = getMDXComponent(post.body.code);
 
   return (
-    <article className="mx-auto max-w-2xl py-8">
+    <article className="py-8 mx-auto max-w-xl">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold">{post.title}</h1>
-        <time dateTime={post.date} className="text-xs text-gray-600">
-          {new Date(post.date).toLocaleDateString()}
+        <time dateTime={post.date} className="mb-1 text-xs text-gray-600">
+          {format(parseISO(post.date), "LLLL d, yyyy")}
         </time>
+        <h1>{post.title}</h1>
       </div>
-      <div className="prose prose-lg">
-        <Content />
-      </div>
+      <Content />
     </article>
-  )
-}
+  );
+};
+
+export default PostLayout;
