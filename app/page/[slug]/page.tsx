@@ -15,7 +15,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
   
   if (!post) {
-    return <div>Nothing here</div>; // 或其他适当的错误处理
+    return <div>Nothing here</div>; 
   }
 
   const Content = getMDXComponent(post.body.code);

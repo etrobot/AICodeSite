@@ -2,8 +2,7 @@
 import { ThemeToggle } from '@/components/theme-toggle';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { TwitterX, Github } from '@/components/ui/social-icons';
-import { HamburgerMenuIcon,Cross1Icon } from '@radix-ui/react-icons';
+import { TwitterLogoIcon, GitHubLogoIcon, HamburgerMenuIcon,Cross1Icon } from '@radix-ui/react-icons';
 
 interface NavbarProps {
   categories?: { id: string; name: string }[];
@@ -34,25 +33,20 @@ const Navbar: React.FC<NavbarProps> = ({ categories, githubUrl, twitterUrl }) =>
             {githubUrl && (
               <li key="github">
                 <a href={githubUrl} target='_blank' rel="noopener noreferrer">
-                  <Github width={20} height={20}/>
+                  <GitHubLogoIcon width={20} height={20}/>
                 </a>
               </li>
             )}
             {twitterUrl && (
               <li key="x">
                 <a href={twitterUrl} target='_blank' rel="noopener noreferrer">
-                  <TwitterX width={20} height={20}/>
+                  <TwitterLogoIcon width={20} height={20}/>
                 </a>
               </li>
             )}
             <li key="home">
               <Link href="/" onClick={() => setIsOpen(false)}>
-                Noteware
-              </Link>
-            </li>
-            <li key="all">
-              <Link href="/blog" onClick={() => setIsOpen(false)}>
-                Blog
+                Home
               </Link>
             </li>
             {/* {categories.map((category) => (
