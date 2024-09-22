@@ -2,6 +2,7 @@ import Link from "next/link";
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPosts, Post } from "contentlayer/generated";
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 function PostCard(post: Post) {
   return (
@@ -18,8 +19,8 @@ function PostCard(post: Post) {
       <time dateTime={post.date} className="block mb-2 text-xs text-gray-600">
         {format(parseISO(post.date), "LLLL d, yyyy")}
       </time>
-      <div className="text-sm">
-        <ReactMarkdown>{post.body.raw}</ReactMarkdown>
+      <div className="prose prose-sm">
+        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{post.body.raw}</ReactMarkdown>
       </div>
     </div>
   );
