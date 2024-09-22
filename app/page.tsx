@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPosts, Post } from "contentlayer/generated";
-import { getMDXComponent } from "next-contentlayer2/hooks";
+import ReactMarkdown from 'react-markdown';
 
 function PostCard(post: Post) {
-  const Content = getMDXComponent(post.body.code);
-
   return (
     <div className="my-8">
       <h2 className="text-xl">
@@ -21,7 +19,7 @@ function PostCard(post: Post) {
         {format(parseISO(post.date), "LLLL d, yyyy")}
       </time>
       <div className="text-sm">
-        <Content />
+        <ReactMarkdown>{post.body.raw}</ReactMarkdown>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { format, parseISO } from "date-fns";
 import { allPosts } from "contentlayer/generated";
-import { getMDXComponent } from "next-contentlayer2/hooks";
+import ReactMarkdown from 'react-markdown';
 
 export const generateStaticParams = async () =>
   allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
@@ -18,8 +18,6 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
     return <div>Nothing here</div>; 
   }
 
-  const Content = getMDXComponent(post.body.code);
-
   return (
     <article className="py-8 mx-auto max-w-xl">
       <div className="mb-8 text-center">
@@ -28,7 +26,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
         </time>
         <h1>{post.title}</h1>
       </div>
-      <Content />
+      <ReactMarkdown>{post.body.raw}</ReactMarkdown>
     </article>
   );
 };
