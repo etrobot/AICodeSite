@@ -1,30 +1,55 @@
 import { defineDocumentType, makeSource } from "contentlayer2/source-files";
 
-const Post = defineDocumentType(() => ({
-  name: "Post",
-  filePathPattern:  "**/*.md",  // 将 .mdx 改为 .md
-  contentType: "markdown",     // 将 mdx 改为 markdown
+const Wiki = defineDocumentType(() => ({
+  name: "Wiki",
+  filePathPattern: "wiki/*.md",
+  contentType: "markdown",
   fields: {
     title: {
       type: "string",
-      description: "The title of the post",
+      description: "Wiki Title",
       required: true,
     },
-    date: {
+    lastUpdated: {
       type: "date",
-      description: "The date of the post",
+      description: "Wiki update time",
       required: true,
     },
   },
   computedFields: {
     url: {
       type: "string",
-      resolve: (doc) => `/page/${doc._raw.flattenedPath}`,
+      resolve: (doc) => `${(doc._raw.flattenedPath)}`,
+    },
+  },
+}));
+
+const Blog = defineDocumentType(() => ({
+  name: "Blog",
+  filePathPattern: "blog/*.md",
+  contentType: "markdown",
+  fields: {
+    title: {
+      type: "string",
+      description: "Blog Title",
+      required: true,
+    },
+    date: {
+      type: "date",
+      description: "Blog publish time",
+      required: true,
+    },
+    // ...
+  },
+  computedFields: {
+    url: {
+      type: "string",
+      resolve: (doc) => `${doc._raw.flattenedPath}`,
     },
   },
 }));
 
 export default makeSource({
   contentDirPath: "markdown",
-  documentTypes: [Post],
+  documentTypes: [Wiki, Blog],
 });

@@ -49,6 +49,11 @@ const Navbar: React.FC<NavbarProps> = ({ categories, githubUrl, twitterUrl }) =>
                 Home
               </Link>
             </li>
+              <li key="blog">
+                <Link href="/blog" onClick={() => setIsOpen(false)}>
+                  Blog
+                </Link>
+              </li>
             {/* {categories.map((category) => (
               <li key={category.id}>
                 <Link href={`/blog/${encodeURIComponent(category.name)}`} onClick={() => setIsOpen(false)}>

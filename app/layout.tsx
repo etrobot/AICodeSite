@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from '@/components/providers';
 import Navbar from '@/components/navbar';
 // Remove this import
 // import Head from 'next/head';
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: process.env.TITLE ?? "AICodeSite",
@@ -41,7 +41,7 @@ export default async function RootLayout({
           <script dangerouslySetInnerHTML={generateGoogleAnalyticsScript() || { __html: '' }} />
         </>
       )}
-      <body className={inter.className}>
+      <body>
         <Providers
           attribute="class"
           defaultTheme="system"
